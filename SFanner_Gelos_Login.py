@@ -68,10 +68,9 @@ if user_choice.upper() == "A":
                 user_pwd = input("Try again : ")
                 print(message_dict["loggedin_message"])
             break
-        else:  # wrong username
-            print(message_dict["new_user_message"])
-            login_menu()
-            break
+        print(message_dict["new_user_message"])
+        login_menu()
+        break
 
 # --------> Option B - option for registering new user<----------------
 elif user_choice.upper() == "B":
