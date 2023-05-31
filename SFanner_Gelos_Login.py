@@ -71,7 +71,6 @@ if user_choice.upper() == "A":
                 user_pwd = input("Try again : ")  # need to work out how to loop back to log in or retry
             break
         print(message_dict["new_user_message"])
-
         login_menu()
         break
 
