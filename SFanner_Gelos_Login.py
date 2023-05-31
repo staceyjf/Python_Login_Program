@@ -42,11 +42,13 @@ _____________________________
 
 # -------->Login menu function<----------------
 def login_menu():
+    """This is a directory of different menu options"""
     print("""
 LOG IN MENU
 _______________________________
     """)
-    menu = ['A. Log in existing user', 'B. Register a new user', 'C. View summary of all user details', 'D. Exit']
+    menu = ['A. Log in existing user', 'B. Register a new user',
+            'C. View summary of all user details', 'D. Exit']
     print(*menu, sep="\n")
 
 
@@ -57,21 +59,20 @@ user_choice = input("Choose your option:")
 # --------> Option A - option for logging in existing user<----------------
 if user_choice.upper() == "A":
     username = input("What is your username: ")
-    user_pwd = input("What is your password: ")
-    for line in open("accounts.txt", "r").readlines():   # opening accounts file and reading line by line
+    # opening accounts file and reading line by line
+    for line in open("accounts.txt", "r").readlines():
         split_item = line.split()    # splitting username and password by whitespace
         if username == split_item[0]:
+            user_pwd = input("What is your password: ")
             if user_pwd == split_item[1]:   # right username & right password
                 print(message_dict["loggedin_message"])
             else:   # right username & wrong password
                 print(message_dict["error_pwd_message"])
-                user_pwd = input("Try again : ")
-                print(message_dict["loggedin_message"])
+                user_pwd = input("Try again : ")  # need to work out how to loop back to log in or retry
             break
-        else:  # wrong username
-            print(message_dict["new_user_message"])
-            login_menu()
-            break
+        print(message_dict["new_user_message"])
+        login_menu()
+        break
 
 # --------> Option B - option for registering new user<----------------
 elif user_choice.upper() == "B":
@@ -81,7 +82,7 @@ Select an option for your password
 (U) User generated or (R) Randomly generated
 """)
     if user_pwd_choice.upper() == "U":  # option for creating your own password
-        user_pwd = input("Please enter your own password - min 8 characters in length: ")
+        user_pwd = input("Please enter your own password - min 8 characters: ")
         pwd_length = len(user_pwd)
 
         while pwd_length < 8:  # Password conditions - min 8 characters
@@ -95,13 +96,13 @@ Select an option for your password
         import string  # Need to import to use string operations
 
         # Define character types
-        def generate_pwd(pwd_length, L, N, S):
+        def generate_pwd(pwd_length, l, n, s):
             characters = ''
-            if L:
+            if l:
                 characters += string.ascii_letters
-            if N:
+            if n:
                 characters += string.digits
-            if S:
+            if s:
                 characters += string.punctuation
 
             if not characters:
@@ -112,14 +113,14 @@ Select an option for your password
             return user_pwd
 
         # Users to choose password length & character types
-        pwd_length = int(input("How many characters would you like - choose between 8 to 14?"))
+        PWD_LENGTH = int(input("How many characters would you like - choose between 8 to 14?"))
 
         L = input("Include letters (y/n): ").lower() == 'y'
         N = input("Include numbers (y/n): ").lower() == 'y'
         S = input("Include symbols (y/n): ").lower() == 'y'
 
         # Generate password
-        user_pwd = generate_pwd(pwd_length, L, N, S)
+        user_pwd = generate_pwd(PWD_LENGTH, L, N, S)
         if user_pwd:
             print("Generated Password:", user_pwd)
             print(message_dict["loggedin_message"])
