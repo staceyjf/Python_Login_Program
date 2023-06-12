@@ -82,39 +82,40 @@ Select an option for your password
 (U) User generated or (R) Randomly generated
 """)
     if user_pwd_choice.upper() == "U":  # option for creating your own password
-        user_pwd = input("Please enter your own password - min 8 characters: ")
+        user_pwd = input("Please enter your own password - 8-14 characters: ")
         pwd_length = len(user_pwd)
 
-        while pwd_length < 8:  # Password conditions - min 8 characters
+        while pwd_length > 8 and pwd_length < 14:  # Password conditions - min 8 characters
+            print(message_dict["loggedin_message"])
+            break
+        else:
             user_pwd = input("Invalid, try again : ")
 
-            if len(user_pwd) >= 8:  # bigger than 8
-                print(message_dict["loggedin_message"])
-            break
+
     else:  # option for generated password
         import secrets
         import string  # Need to import to use string operations
 
         # Define character types
-        def generate_pwd(pwd_length, l, n, s):
-            characters = ''
-            if l:
-                characters += string.ascii_letters
-            if n:
-                characters += string.digits
-            if s:
-                characters += string.punctuation
+        def generate_pwd(pwd_length, le, n, s):
+            if pwd_length < 8 or pwd_length > 14:
+                characters = ''
+                if le:
+                    characters += string.ascii_letters
+                if n:
+                    characters += string.digits
+                if s:
+                    characters += string.punctuation
 
-            if not characters:
-                print("Error: At least one character must be selected. ")
-                return None
+                if not characters:
+                    print("Error: At least one character must be selected. ")
+                    return None
 
-            user_pwd = ''.join(secrets.choice(characters) for _ in range(pwd_length))
-            return user_pwd
+                user_pwd = ''.join(secrets.choice(characters) for _ in range(pwd_length))
+                return user_pwd
 
         # Users to choose password length & character types
         PWD_LENGTH = int(input("How many characters would you like - choose between 8 to 14?"))
-
         L = input("Include letters (y/n): ").lower() == 'y'
         N = input("Include numbers (y/n): ").lower() == 'y'
         S = input("Include symbols (y/n): ").lower() == 'y'
